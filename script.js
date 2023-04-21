@@ -15,49 +15,49 @@ const initialData = {
   ],
 };
 
-const originalList = document.getElementById("original-list");
 const mainList = document.getElementById("main-list");
 const secondList = document.getElementById("second-list");
 
-const mainListBtn = document.getElementById("main-list-btn");
-const secondListBtn = document.getElementById("second-list-btn");
+document
+  .getElementById("main-list-btn")
+  .addEventListener("click", populateUsingTransform);
+
+document
+  .getElementById("second-list-btn")
+  .addEventListener("click", populateUsingTransformWithMap);
 
 initialData.roles.forEach((item) => {
   const li = document.createElement("li");
   li.innerText = item.value;
-  originalList.insertAdjacentElement("beforeend", li);
+  document
+    .getElementById("original-list")
+    .insertAdjacentElement("beforeend", li);
 });
 
-
-mainListBtn.addEventListener("click", () => {
-  const newData = transform(initialData);
-
-  newData.forEach((item) => {
+function populateUsingTransform() {
+  transformWithForEach(initialData).forEach((item) => {
     const li = document.createElement("li");
     li.innerText = item;
     mainList.insertAdjacentElement("beforeend", li);
   });
-});
+}
 
-secondListBtn.addEventListener("click", () => {
-  const newData = transformWithMap(initialData);
-
-  newData.forEach((item) => {
+function populateUsingTransformWithMap() {
+  transformWithMap(initialData).forEach((item) => {
     const li = document.createElement("li");
     li.innerText = item;
     secondList.insertAdjacentElement("beforeend", li);
   });
-});
+}
 
-
-function transform(attributes) {
+function transformWithForEach(attributes) {
   var roles = [];
   attributes.roles.forEach(function (item) {
-    roles.push(item.value);
+    roles.push("transformWithForEach: " + item.value);
   });
   return roles;
 }
 
 function transformWithMap(attributes) {
-  return attributes.roles.map((item) => item.value);
+  return attributes.roles.map((item) => "transformWithMap: " + item.value);
 }
